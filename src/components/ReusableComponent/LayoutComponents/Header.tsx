@@ -5,18 +5,18 @@ import LightningIcon from '@/icons/LightningIcon'
 import CreateWebinarButton from '../CreateWebinar'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
-import { AiAgents } from '@prisma/client'
-// import SubscriptionModal from '../SubscriptionModal'
-// import { StripeElements } from '../Stripe/Element'
+import { AiAgents, User } from '@prisma/client'
+import SubscriptionModal from '../SubscriptionModal'
+import { StripeElements } from '../Stripe/Element'
 import Stripe from 'stripe'
 
 type Props = {
   assistants: AiAgents[] | []
-  // user: User
+  user: User
   stripeProducts: Stripe.Product[] | []
 }
 
-const Header = ({ assistants, stripeProducts }: Props) => {
+const Header = ({ assistants, user, stripeProducts }: Props) => {
   const pathname = usePathname()
   const router = useRouter()
   return (
@@ -40,7 +40,7 @@ const Header = ({ assistants, stripeProducts }: Props) => {
           <LightningIcon />
         </PurpleIcon>
 
-        //No need for subscription check as of now
+  
         {/*{user?.subscription ? (*/}
           <CreateWebinarButton
             assistants={assistants}
