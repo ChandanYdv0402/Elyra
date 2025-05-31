@@ -39,16 +39,18 @@ const Header = ({ assistants, user, stripeProducts }: Props) => {
         <PurpleIcon>
           <LightningIcon />
         </PurpleIcon>
-        {user?.subscription ? (
+
+        //No need for subscription check as of now
+        {/*{user?.subscription ? (*/}
           <CreateWebinarButton
             assistants={assistants}
             stripeProducts={stripeProducts}
           />
-        ) : (
-          <StripeElements>
-            <SubscriptionModal user={user} />
-          </StripeElements>
-        )}
+        {/*) : (*/}
+        {/*  <StripeElements>*/}
+        {/*    <SubscriptionModal user={user} />*/}
+        {/*  </StripeElements>*/}
+        {/*)}*/}
       </div>
     </div>
   )

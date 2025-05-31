@@ -1,7 +1,7 @@
 'use client'
-import { Waitlist } from '@clerk/nextjs'
+// import { Waitlist } from '@clerk/nextjs'
 import Link from 'next/link'
-
+import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 
 import Image from 'next/image'
@@ -85,9 +85,9 @@ function ElegantShape({
   )
 }
 
-const badge = 'By Web Prodigies'
+const badge = 'By Bhavishya and Chandan'
 const title1 = 'Welcome To'
-const title2 = 'Spotlight Premium'
+const title2 = 'Elyra'
 
 export default function HeroGeometric() {
   const fadeUpVariants = {
@@ -207,7 +207,14 @@ export default function HeroGeometric() {
               and cutting-edge technology.
             </p>
             <div className="flex items-center justify-center flex-col">
-              <Waitlist signInUrl="/sign-in" />
+              <Link href="/sign-in">
+                <Button
+                  className="px-6 py-2 text-lg bg-gradient-to-r from-indigo-500 to-rose-500 text-white hover:opacity-90 transition-opacity"
+                >
+                  Sign In
+                </Button>
+              </Link>
+
             </div>
           </motion.div>
 
@@ -221,18 +228,14 @@ export default function HeroGeometric() {
             }}
           >
             <p className="text-muted-foreground/50">
-              This codebase is the property of Web Prodigies LLC and is intended
-              solely for customers who have legally obtained a copy of this
-              codebase. Unauthorized reproduction, distribution, or disclosure
-              of any part of this document is strictly prohibited. Web Prodigies
-              LLC. All rights reserved.
+              hello
             </p>
-            <Link href="https://webprodigies.com/store/collections/github-codebase">
+            <Link href="https://github.com/ChandanYdv0402/Elyra">
               <Badge
                 variant="outline"
                 className="mt-4 text-lg text-primary"
               >
-                🔥Purchase the codebase by clicking here
+                GitHub Link to the code base
               </Badge>
             </Link>
           </motion.div>

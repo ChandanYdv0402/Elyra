@@ -13,10 +13,10 @@ export const createWebinar = async (formData: WebinarFormState) => {
     if (!user.user) {
       return { status: 401, message: "Unauthorized" };
     }
-
-    if (!user.user.subscription) {
-      return { status: 402, message: "Subscription required" };
-    }
+    // Removed since we want to use all the features without Paying as it as an academic project
+    // if (!user.user.subscription) {
+    //   return { status: 402, message: "Subscription required" };
+    // }
 
     const presenterId = user.user.id;
 

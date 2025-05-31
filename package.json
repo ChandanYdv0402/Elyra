@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "npm install --legacy-peer-deps && next build"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.10",
@@ -67,5 +68,6 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "prisma": "^6.3.1"
-  }
+  },
+
 }
