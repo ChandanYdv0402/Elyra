@@ -6,8 +6,8 @@ import CreateWebinarButton from '../CreateWebinar'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { AiAgents, User } from '@prisma/client'
-import SubscriptionModal from '../SubscriptionModal'
-import { StripeElements } from '../Stripe/Element'
+// import SubscriptionModal from '../SubscriptionModal'
+// import { StripeElements } from '../Stripe/Element'
 import Stripe from 'stripe'
 
 type Props = {
