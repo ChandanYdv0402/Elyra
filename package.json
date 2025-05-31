@@ -68,6 +68,5 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "prisma": "^6.3.1"
-  },
-
+  }
 }
