@@ -12,11 +12,11 @@ import Stripe from 'stripe'
 
 type Props = {
   assistants: AiAgents[] | []
-  user: User
+  // user: User
   stripeProducts: Stripe.Product[] | []
 }
 
-const Header = ({ assistants, user, stripeProducts }: Props) => {
+const Header = ({ assistants, stripeProducts }: Props) => {
   const pathname = usePathname()
   const router = useRouter()
   return (
