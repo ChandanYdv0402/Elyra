@@ -1,53 +1,60 @@
-# syntax=docker.io/docker/dockerfile:1
+# syntax=docker/dockerfile:1
 
+# Base image
 FROM node:20-alpine AS base
 
-# Install dependencies only when needed
+WORKDIR /app
+
+# Install dependencies (only what's needed for production build)
 FROM base AS deps
-RUN apk add --no-cache libc6-compat curl bash
 
-# Install Bun
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:$PATH"
+# Install system dependencies
+RUN apk add --no-cache libc6-compat bash
 
-WORKDIR /app
+# Copy dependency-related files first
+COPY package.json package-lock.json ./
+COPY prisma ./prisma
 
-COPY package.json bun.lock ./       
-COPY prisma ./prisma             
+# Install dependencies
+RUN npm install --frozen-lockfile
 
-RUN bun install --frozen-lockfile
+# Generate Prisma client
+RUN npx prisma generate
 
-# Rebuild the source code only when needed
+# Build the app
 FROM base AS builder
-RUN apk add --no-cache libc6-compat curl bash
-RUN curl -fsSL https://bun.sh/install | bash
-ENV PATH="/root/.bun/bin:$PATH"
 
-WORKDIR /app
-
+# Copy installed node_modules and prisma client
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/prisma ./prisma 
+COPY --from=deps /app/prisma ./prisma
+
+# Copy the rest of the application
 COPY . .
 
-RUN bun prisma generate && bun run build
+# Build the app using npm
+RUN npm run build
 
-# Production image
+# Final runtime image
 FROM base AS runner
+
+# Optional: create a non-root user
+RUN addgroup --system --gid 1001 nodejs \
+  && adduser --system --uid 1001 nextjs
+
 WORKDIR /app
 
+# Set environment vars
 ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
+# Copy built app from builder
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.env ./.env  # Optional: only if you need env vars
 
 USER nextjs
 
 EXPOSE 3000
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
 CMD ["node", "server.js"]
